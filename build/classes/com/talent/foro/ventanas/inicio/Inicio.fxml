@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.talent.foro.ventanas.inicio.InicioController"
+    prefWidth="800"
+    prefHeight="600" >
+    
+    <stylesheets>
+        <String fx:value="com/talent/foro/estilos/dimensiones.css"/>
+        <String fx:value="com/talent/foro/estilos/fondos.css"/>
+        <String fx:value="com/talent/foro/estilos/texto.css"/>
+    </stylesheets>
+    
+    <children>
+        
+        <!-- menu bar -->
+        <MenuBar>
+            <menus>
+                <Menu fx:id="mnNombreUsuario" text="Nombre de usuario"/>
+                <Menu fx:id="mnSalir" text="Salir"/>
+            </menus>
+        </MenuBar><!-- menu bar -->
+        
+        <SplitPane
+            VBox.vgrow="ALWAYS">
+            
+            <!-- side menu -->
+            <ScrollPane
+                fitToHeight="true"
+                fitToWidth="true"
+                maxWidth="300"
+                minWidth="150" 
+                prefWidth="300">
+
+                <content>
+                    <!-- side menu container -->
+                    <VBox>
+                        <children>
+                            
+                            <!-- user item -->
+                            <VBox
+                                styleClass="padding-chico">
+                                <Label text="Label" />
+                            </VBox>
+                            <!-- user item -->
+                            
+                            <!-- user item -->
+                            <VBox
+                                styleClass="padding-chico">
+                                <Label text="Label" />
+                            </VBox>
+                            <!-- user item -->
+                            
+                            <!-- user item -->
+                            <VBox
+                                styleClass="padding-chico">
+                                <Label text="Label" />
+                            </VBox>
+                            <!-- user item -->
+                            
+                        </children>
+                    </VBox><!-- side menu container -->
+                </content>
+            </ScrollPane><!-- side menu -->
+            
+            <!-- main container -->
+            <VBox>
+                <children>
+                    
+                    <!-- chat history -->
+                    <TextArea
+                        SplitPane.resizableWithParent="true"
+                        VBox.vgrow="ALWAYS"/>
+                    
+                    <!-- user input -->
+                    <HBox
+                        styleClass="padding-chico">
+                        <children>
+                            <TextField HBox.hgrow="ALWAYS"/>
+                            <Button text="Enviar"/>
+                        </children>
+                    </HBox><!-- user input -->
+                    
+                </children>
+            </VBox><!-- main container -->
+            
+        </SplitPane>
+        
+    </children>
+</VBox>

@@ -1,0 +1,11 @@
+.padding-grande {
+    -fx-padding: 30;
+}
+
+.padding-mediano {
+    -fx-padding: 20;
+}
+
+.padding-chico {
+    -fx-padding: 10;
+}

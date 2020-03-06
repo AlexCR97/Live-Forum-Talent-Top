@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.talent.foro.ventanas.login.LoginController"
+    prefWidth="600">
+    
+    <stylesheets>
+        <String fx:value="com/talent/foro/estilos/dimensiones.css"/>
+        <String fx:value="com/talent/foro/estilos/fondos.css"/>
+        <String fx:value="com/talent/foro/estilos/texto.css"/>
+    </stylesheets>
+    
+    <children>
+    
+        <!-- encabezado -->
+        <VBox
+            alignment="CENTER">
+            
+            <styleClass>
+                <String fx:value="fondo-primario"/>
+                <String fx:value="padding-mediano"/>
+            </styleClass>
+            
+            <children>
+            
+                <Label
+                    text="Bienvenido al Foro de Talent Top">
+                    <styleClass>
+                        <String fx:value="texto-claro"/>
+                        <String fx:value="texto-grande"/>
+                    </styleClass>
+                </Label>
+            
+            </children>
+        </VBox><!-- encabezado -->
+
+        <!-- formulario -->
+        <VBox
+            VBox.vgrow="ALWAYS"
+            alignment="CENTER"
+            styleClass="padding-grande">
+            <children>
+                
+                <Label text="Usuario"/>
+                <TextField fx:id="tfUsuario" promptText="Nombre de usuario">
+                    <VBox.margin>
+                        <javafx.geometry.Insets top="8" bottom="15" />
+                    </VBox.margin>
+                </TextField>
+                
+                <Label text="Contrasena"/>
+                <PasswordField fx:id="pfContrasena" promptText="Tu contraseña">
+                    <VBox.margin>
+                        <javafx.geometry.Insets top="8" bottom="15" />
+                    </VBox.margin>
+                </PasswordField>
+                
+                <Button
+                    fx:id="btIniciar"
+                    text="Iniciar"
+                    prefWidth="300" />
+                
+            </children>
+        </VBox><!-- formulario -->
+        
+        <!-- pie -->
+        <VBox
+            alignment="CENTER" >
+            <styleClass>
+                <String fx:value="fondo-primario"/>
+                <String fx:value="padding-mediano"/>
+            </styleClass>
+            
+            <Label text="¿No tienes una cuenta?" styleClass="texto-claro"/>
+            <Label fx:id="lbRegistrate" text="Registrate">
+                <styleClass>
+                    <String fx:value="texto-claro"/>
+                    <String fx:value="texto-negritas"/>
+                </styleClass>
+            </Label>
+            
+        </VBox><!-- pie -->
+    
+    </children>
+</VBox>

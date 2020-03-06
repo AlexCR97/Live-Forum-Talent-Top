@@ -1,0 +1,19 @@
+.texto-chico {
+    -fx-font-size: 20;
+}
+
+.texto-mediano {
+    -fx-font-size: 25;
+}
+
+.texto-grande {
+    -fx-font-size: 30;
+}
+
+.texto-claro {
+    -fx-text-fill: white;
+}
+
+.texto-negritas {
+    -fx-font-weight: bold;
+}

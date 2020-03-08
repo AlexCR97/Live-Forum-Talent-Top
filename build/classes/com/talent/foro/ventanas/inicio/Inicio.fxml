@@ -21,77 +21,46 @@
     <children>
         
         <!-- menu bar -->
-        <MenuBar>
-            <menus>
-                <Menu fx:id="mnNombreUsuario" text="Nombre de usuario"/>
-                <Menu fx:id="mnSalir" text="Salir"/>
-            </menus>
-        </MenuBar><!-- menu bar -->
+        <HBox
+            alignment="CENTER_LEFT"
+            spacing="10"
+            styleClass="padding-chico">
+            <Label fx:id="lbUsuario" text="Usuario"/>
+            <Button fx:id="btCerrarSesion" text="Cerrar Sesión"/>
+        </HBox>
         
-        <SplitPane
+        <!-- main container -->
+        <VBox
             VBox.vgrow="ALWAYS">
-            
-            <!-- side menu -->
-            <ScrollPane
-                fitToHeight="true"
-                fitToWidth="true"
-                maxWidth="300"
-                minWidth="150" 
-                prefWidth="300">
+            <children>
 
-                <content>
-                    <!-- side menu container -->
-                    <VBox>
-                        <children>
-                            
-                            <!-- user item -->
-                            <VBox
-                                styleClass="padding-chico">
-                                <Label text="Label" />
-                            </VBox>
-                            <!-- user item -->
-                            
-                            <!-- user item -->
-                            <VBox
-                                styleClass="padding-chico">
-                                <Label text="Label" />
-                            </VBox>
-                            <!-- user item -->
-                            
-                            <!-- user item -->
-                            <VBox
-                                styleClass="padding-chico">
-                                <Label text="Label" />
-                            </VBox>
-                            <!-- user item -->
-                            
-                        </children>
-                    </VBox><!-- side menu container -->
-                </content>
-            </ScrollPane><!-- side menu -->
+                <!-- chat history -->
+                <ScrollPane
+                    fx:id="scrollMensajes"
+                    SplitPane.resizableWithParent="true"
+                    VBox.vgrow="ALWAYS"
+                    fitToHeight="true"
+                    fitToWidth="true"
+                    styleClass="padding-chico">
+
+                    <content>
+                        <StackPane fx:id="spMensajes"/>
+                    </content>
+
+                </ScrollPane><!-- chat history -->
+
+                <!-- user input -->
+                <HBox
+                    styleClass="padding-chico">
+                    <children>
+                        <TextField fx:id="tfMensaje" HBox.hgrow="ALWAYS"/>
+                        <Pane prefWidth="10"/> 
+                        <Button fx:id="btEnviar" text="Enviar"/>
+                    </children>
+                </HBox><!-- user input -->
+
+            </children>
+        </VBox><!-- main container -->
             
-            <!-- main container -->
-            <VBox>
-                <children>
-                    
-                    <!-- chat history -->
-                    <TextArea
-                        SplitPane.resizableWithParent="true"
-                        VBox.vgrow="ALWAYS"/>
-                    
-                    <!-- user input -->
-                    <HBox
-                        styleClass="padding-chico">
-                        <children>
-                            <TextField HBox.hgrow="ALWAYS"/>
-                            <Button text="Enviar"/>
-                        </children>
-                    </HBox><!-- user input -->
-                    
-                </children>
-            </VBox><!-- main container -->
-            
-        </SplitPane>
-        
     </children>
 </VBox>

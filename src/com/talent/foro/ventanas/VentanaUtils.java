@@ -15,27 +15,29 @@ import javafx.stage.Stage;
 
 public class VentanaUtils {
     
-    public void abrirVentana(String ruta) {
-        abrirVentana(ruta, null);
+    public Stage abrirVentana(String ruta) {
+        return abrirVentana(ruta, null);
     }
     
-    public void abrirVentana(String ruta, Object eventSource) {
+    public Stage abrirVentana(String ruta, Object eventSource) {
         try {
             Parent newRoot = FXMLLoader.load(getClass().getResource(ruta));
             Scene newScene = new Scene(newRoot);
             Stage newStage = new Stage();
             
             newStage.setScene(newScene);
-            newStage.show();
             
             if (eventSource != null) {
                 Node source = (Node) eventSource;
                 Stage stage = (Stage) source.getScene().getWindow();
                 stage.close();
             }
+            
+            return newStage;
         }
         catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
     

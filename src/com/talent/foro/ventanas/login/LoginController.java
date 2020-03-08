@@ -16,6 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
     
@@ -31,54 +34,76 @@ public class LoginController implements Initializable {
     @FXML
     private Label lbRegistrate;
     
-    private Event ultimoEvento;
-    
     private final ServicioCache servicioCache = ServicioCache.getInstance();
     private final ServicioConsultas servicioConsultas = new ServicioConsultas();
     private final VentanaUtils ventana = new VentanaUtils();
+    private Event ultimoEvento;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btIniciar.setOnMouseClicked(e -> {
+        tfUsuario.setOnKeyPressed(e -> {
             ultimoEvento = e;
             
-            String nombreUsuario = tfUsuario.getText();
-            String contrasena = pfContrasena.getText();
-            
-            if (!validarDatos(nombreUsuario, contrasena)) {
-                return;
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                intentarLogin();
             }
+        });
+        
+        pfContrasena.setOnKeyPressed(e -> {
+            ultimoEvento = e;
             
-            btIniciar.setDisable(true);
-            
-            servicioConsultas.getUsuario(nombreUsuario, contrasena)
-            .thenAccept(usuario -> {
-                Platform.runLater(() -> {
-                    btIniciar.setDisable(false);
-                    iniciarSesion(usuario);
-                });
-            })
-            .exceptionally(ex -> {
-                ex.printStackTrace();
-                
-                Platform.runLater(() -> {
-                    btIniciar.setDisable(false);
-                    ventana.mostrarAlertaMensaje(ex.getMessage());
-                });
-                
-                return null;
-            });
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                intentarLogin();
+            }
+        });
+        
+        btIniciar.setOnMouseClicked(e -> {
+            ultimoEvento = e;
+            intentarLogin();
         });
         
         lbRegistrate.setOnMouseClicked(e -> {
             ultimoEvento = e;
-            ventana.abrirVentana("/com/talent/foro/ventanas/registro/Registro.fxml", ultimoEvento.getSource());
+            Stage ventanaRegistro = ventana.abrirVentana("/com/talent/foro/ventanas/registro/Registro.fxml", ultimoEvento.getSource());
+            ventanaRegistro.show();
         });
     }
     
     private void iniciarSesion(Usuario usuario) {
         servicioCache.agregarCache("usuario", usuario);
-        ventana.abrirVentana("/com/talent/foro/ventanas/inicio/Inicio.fxml", ultimoEvento.getSource());
+        
+        Stage ventanaInicio = ventana.abrirVentana("/com/talent/foro/ventanas/inicio/Inicio.fxml", ultimoEvento.getSource());
+        ventanaInicio.initStyle(StageStyle.DECORATED);
+        ventanaInicio.show();
+    }
+    
+    private void intentarLogin() {
+        String nombreUsuario = tfUsuario.getText();
+        String contrasena = pfContrasena.getText();
+
+        if (!validarDatos(nombreUsuario, contrasena)) {
+            return;
+        }
+
+        btIniciar.setDisable(true);
+
+        servicioConsultas.getUsuario(nombreUsuario, contrasena)
+        .thenAccept(usuario -> {
+            Platform.runLater(() -> {
+                btIniciar.setDisable(false);
+                iniciarSesion(usuario);
+            });
+        })
+        .exceptionally(ex -> {
+            ex.printStackTrace();
+
+            Platform.runLater(() -> {
+                btIniciar.setDisable(false);
+                ventana.mostrarAlertaMensaje(ex.getMessage());
+            });
+
+            return null;
+        });
     }
     
     private boolean validarDatos(String usuario, String contrasena) {

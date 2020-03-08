@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 public class RegistroController implements Initializable {
 
@@ -41,52 +43,83 @@ public class RegistroController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tfUsuario.setOnKeyPressed(e -> {
+            ultimoEvento = e;
+            
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                intentarRegistro();
+            }
+        });
+        
+        pfContrasena.setOnKeyPressed(e -> {
+            ultimoEvento = e;
+            
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                intentarRegistro();
+            }
+        });
+        
+        pfConfirmarContrasena.setOnKeyPressed(e -> {
+            ultimoEvento = e;
+            
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                intentarRegistro();
+            }
+        });
+        
         lbIniciaSesion.setOnMouseClicked(e -> {
             ultimoEvento = e;
-            ventana.abrirVentana("/com/talent/foro/ventanas/login/Login.fxml", ultimoEvento.getSource());
+            Stage ventanaLogin = ventana.abrirVentana("/com/talent/foro/ventanas/login/Login.fxml", ultimoEvento.getSource());
+            ventanaLogin.show();
         });
         
         btRegistrarse.setOnMouseClicked(e -> {
             ultimoEvento = e;
             
-            String usuario = tfUsuario.getText();
-            String contrasena = pfContrasena.getText();
-            String confirmarContrasena = pfConfirmarContrasena.getText();
-            
-            if (!validarDatos(usuario, contrasena, confirmarContrasena)) {
-                return;
-            }
-            
-            btRegistrarse.setDisable(true);
-            
-            servicioConsultas.verificarExistenciaUsuario(usuario)
-            .thenAccept(usuarioExiste -> {
-                if (usuarioExiste) {
-                    Platform.runLater(() -> {
-                        btRegistrarse.setDisable(false);
-                        ventana.mostrarAlertaMensaje("El nombre de usuario '" + usuario + "' no esta disponible :(");
-                    });
-                }
-                else {
-                    registrarUsuario(usuario, contrasena);
-                }
-            })
-            .exceptionally(ex -> {
-                ex.printStackTrace();
-                
-                Platform.runLater(() -> {
-                    btRegistrarse.setDisable(false);
-                    ventana.mostrarAlertaMensaje(ex.getMessage());
-                });
-                
-                return null;
-            });
+            intentarRegistro();
         });
     }
     
     private void iniciarSesion(Usuario usuario) {
         servicioCache.agregarCache("usuario", usuario);
-        ventana.abrirVentana("/com/talent/foro/ventanas/inicio/Inicio.fxml", ultimoEvento.getSource());
+        
+        Stage ventanaInicio = ventana.abrirVentana("/com/talent/foro/ventanas/inicio/Inicio.fxml", ultimoEvento.getSource());
+        ventanaInicio.show();
+    }
+    
+    private void intentarRegistro() {
+        String usuario = tfUsuario.getText();
+        String contrasena = pfContrasena.getText();
+        String confirmarContrasena = pfConfirmarContrasena.getText();
+
+        if (!validarDatos(usuario, contrasena, confirmarContrasena)) {
+            return;
+        }
+
+        btRegistrarse.setDisable(true);
+
+        servicioConsultas.verificarExistenciaUsuario(usuario)
+        .thenAccept(usuarioExiste -> {
+            if (usuarioExiste) {
+                Platform.runLater(() -> {
+                    btRegistrarse.setDisable(false);
+                    ventana.mostrarAlertaMensaje("El nombre de usuario '" + usuario + "' no esta disponible :(");
+                });
+            }
+            else {
+                registrarUsuario(usuario, contrasena);
+            }
+        })
+        .exceptionally(ex -> {
+            ex.printStackTrace();
+
+            Platform.runLater(() -> {
+                btRegistrarse.setDisable(false);
+                ventana.mostrarAlertaMensaje(ex.getMessage());
+            });
+
+            return null;
+        });
     }
     
     private void registrarUsuario(String nombreUsuario, String contrasena) {

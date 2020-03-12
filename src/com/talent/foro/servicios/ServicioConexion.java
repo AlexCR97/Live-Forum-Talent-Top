@@ -17,11 +17,11 @@ public class ServicioConexion {
     private Connection conexion;
 
     public ServicioConexion() {
-        servidor = "localhost";
+        servidor = "remotemysql.com";
         puerto = "3306";
-        baseDeDatos = "foro";
-        usuario = "root";
-        contrasena = "1234";
+        baseDeDatos = "WERiQ3oK0o";
+        usuario = "WERiQ3oK0o";
+        contrasena = "dUSrrZAeyM";
     }
     
     public ServicioConexion(String servidor, String puerto, String baseDeDatos, String usuario, String contrasena) {
